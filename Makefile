@@ -12,6 +12,7 @@ restart: down up
 rebuild: down docker-build
 reset: rebuild up
 
+
 docker-up:
 	docker-compose -p $(DOCKER_PROJECT_TITLE) up -d
 	@echo ***Success! Your app is ready and available at http://localhost:$(DOCKER_NGINX_PORT) and you can connect MySQL from your host machine on port $(DOCKER_MYSQL_PORT).***
@@ -53,9 +54,8 @@ permissions-fix:
 	docker-compose -p $(DOCKER_PROJECT_TITLE) run --rm php-fpm sh -c "chmod -R u+rwX,g+w,go+rX,o-w .; [ -d ./var/log ] && chmod -R 777 ./var/log; [ -d ./var/cache ] && chmod -R 777 ./var/cache; chmod -R o+rX ./public"
 
 configs-setup:
-	rm -r ./vendor composer.json composer.lock RUN_MAKE_INIT_COMMAND_PLEASE.md || true # Remove template root composer files, keep only the ./app ones
 	[ -f docker-compose.yaml ] && echo "Skip docker-compose.yaml" || cp docker-compose.yaml.dist docker-compose.yaml
-	[ -f ./app/.env.local ] && echo "Skip .env.local" || cp ./app/.env ./app/.env.local
+	[ -f ./symfony/.env.local ] && echo "Skip .env.local" || cp ./symfony/.env ./symfony/.env.local
 	[ -f ./.env ] && echo "Skip docker .env" || cp ./.env.dist ./.env
-	[ -f ./app/phpunit.xml ] && echo "Skip phpunit.xml" || cp ./app/phpunit.xml.dist ./app/phpunit.xml
+	[ -f ./symfony/phpunit.xml ] && echo "Skip phpunit.xml" || cp ./symfony/phpunit.xml.dist ./symfony/phpunit.xml
 
