@@ -1,7 +1,7 @@
 FROM nginx:1.17-alpine
 
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY ./.docker/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./.docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /app
 
